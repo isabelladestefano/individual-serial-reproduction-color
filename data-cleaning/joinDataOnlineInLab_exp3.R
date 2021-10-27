@@ -1,0 +1,18 @@
+### this is a work in progress ###
+
+
+test_data_exp3_online = read_csv("data/exp3/online/test_data_exp3_online.csv")
+test_data_exp3_inlab = read_csv("data/exp3/inlab/test_data_exp3_inlab.csv")
+
+test_data_exp3 = bind_rows(test_data_exp3_online, test_data_exp3_inlab)
+
+test_data_exp3 = test_data_exp3 %>% 
+  group_by(curID) %>% 
+  summarise() %>% 
+  mutate(subject = 1:nrow(.)) %>% 
+  inner_join(test_data_exp3 %>% select(-subject), by = c("curID"))
+
+
+print(paste0("test_data_exp3 subjects: ", test_data_exp3 %>% pull(subject) %>% unique() %>% length()))
+print(paste0("chain_data_exp3 subjects: ", chain_data_exp3 %>% pull(subject) %>% unique() %>% length()))
+print(paste0("demographics_data_exp3 subjects: ", demographics_data_exp3 %>% pull(subject) %>% unique() %>% length()))
