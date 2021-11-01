@@ -56,9 +56,6 @@ all_data_exp3 = data.frame(data)
 all_demographics_data_exp3 = data.frame(demographics_data )
 
 
-test_data_exp3 %>%
-  mutate(order = )
-
 test_data_exp3 = all_data_exp3 %>%
   filter(!isPractice)%>%
   mutate(error = errorSign*curError)
