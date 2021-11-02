@@ -1,3 +1,9 @@
+require(tidyverse)
+source("results/serial-dependence/serialDependenceFunctions.R")
+
+
+
+
 serdep_data_exp1 <-test_data_exp1 %>%
   #filter(type == "fixed")%>%
   group_by(subject, currentBlock)%>% 
@@ -8,49 +14,7 @@ serdep_data_exp1 %>%
   ggplot(aes(x= dist_prev_trial))+
   geom_histogram()
 
-serial_dependence_sliding_window <- function(data){ 
-  window_size = 90
-  window_step = 6
-  window_max = 180 
-  window_min = -180
-  
-  serdep_sliding_window<- data.frame(subject = c(),  error = c(), N= c(), dist= c())
-  
-  for(i in seq(window_min,window_max,6)){
-    cur_min = i-window_size/2
-    cur_max = i+window_size/2
-    
-    if(abs(cur_min) < -180){
-      cur_min = cur_min+360
-      serdep_sliding_window <- data%>%
-        filter(dist_prev_trial >= cur_min) %>%
-        bind_rows(data %>% filter(dist_prev_trial< cur_max))%>%
-        group_by(subject)%>%
-        summarise(error = mean(error), N=n())%>% 
-        mutate(dist = i)%>%
-        bind_rows(serdep_sliding_window)
-    }
-    if(abs(cur_max) >= 180){
-      cur_max = cur_max-360
-      serdep_sliding_window <- data %>%
-        filter(dist_prev_trial >= cur_min) %>%
-        bind_rows(data %>% filter(dist_prev_trial< cur_max))%>%
-        group_by(subject)%>%
-        summarise(error = mean(error), N=n())%>% 
-        mutate(dist = i)%>%
-        bind_rows(serdep_sliding_window)
-    }
-    else{
-    serdep_sliding_window <- data %>%
-      filter(dist_prev_trial < cur_max, dist_prev_trial >= cur_min) %>%
-      group_by(subject)%>%
-      summarise(error = mean(error), N=n())%>% 
-      mutate(dist = i)%>%
-      bind_rows(serdep_sliding_window)
-    }
-  }
-  return(serdep_sliding_window)
-}
+
 
 serdep_sliding_window_exp1 <- serial_dependence_sliding_window(serdep_data_exp1) 
 
@@ -70,6 +34,23 @@ serdep_sliding_window_exp1 %>% arrange(subject) %>%
   ggtitle("all trials exp 1")+
   ylim(-10,10)
 
+
+fits_exp1 <- DoG_subjectFits(serdep_sliding_window_exp1)
+
+i=2
+subject_pars = fits_exp1 %>% filter(subject == i)
+\\fit = data.frame(x=-180:180) %>% mutate(y = DoG(x,subject_pars$b, subject_pars$a, subject_pars$w))
+
+serdep_sliding_window_exp1 %>% 
+  filter(subject == i)%>%
+  ggplot(aes(x=dist, y = error))+
+  geom_point( aes(x=dist, y = error))+
+  geom_line(data = fit, aes(x=x,y=y))
+
+
+
+
+
 ## chain data only???
 serdep_chain_data_exp1 <-test_data_exp1 %>%
   group_by(subject, currentBlock)%>% 
@@ -80,7 +61,8 @@ serdep_chain_data_exp1 <-test_data_exp1 %>%
   arrange(iteration)%>%
   mutate(iteration = 1:length(unique(iteration)))%>%
   ungroup() %>%
-  filter(!is.na(dist_prev_trial))
+  filter(!is.na(dist_prev_trial)) %>%
+  filter(iteration>5)
 
 serdep_sliding_window_chain_exp1 <- serial_dependence_sliding_window(serdep_chain_data_exp1)
 
@@ -131,5 +113,9 @@ serdep_sliding_window_exp2 %>% arrange(subject) %>%
   geom_hline(yintercept = 0, size = .5, linetype = 1)+
   geom_vline(xintercept = 0, size = .5, linetype = 1)
 #ylim(-10,10)
+
+
+
+
 
 
