@@ -14,7 +14,7 @@ for(f in 1:length(filenames)){
   raw_data[[f]] = fromJSON(url(paste0("https://bradylab.ucsd.edu/turk/data/Isabella/iteratedColorsSS1UniformTargetDistribution15iterations_colorwheel2_V3/",filenames[f])))
 }
 
-fups=c()
+fups=c() ## subject 64 and 65 ids are replicated but are different subjects and are treated as such in code
 data = c()
 for(d in 1:length(raw_data)){
   dat = raw_data[[d]]
@@ -68,16 +68,13 @@ all_data_exp1 = data.frame(data)%>% distinct() %>%
 all_demographics_data_exp1 = data.frame(demographics_data )
 
 test_data_exp1 = all_data_exp1 %>%
-  arrange(curID, currentBlock,currentTrial)%>%
+  arrange(subject, currentBlock,currentTrial)%>%
   filter(!isPractice)%>%
-  mutate(error = errorSign*curError)%>%
   mutate(items = unlist(items)%%360) %>%
-  group_by(curID) %>%
-  mutate(curTrial = currentTrial + 20*(currentBlock - 1))%>%
-  arrange(curID,curTrial)%>%
-  mutate(stim_direction = circDist(imgNum,lag(imgNum)),
-         serialSign = stim_direction/abs(stim_direction)) 
-  
+  group_by(subject) %>%
+  mutate(curTrial = currentTrial + 20*(currentBlock - 1))
+
+test_data_exp1$error = mapply(circDist, test_data_exp1$imgNum, test_data_exp1$items)
 
 test_data_exp1 %>% ggplot(aes(x=error))+ 
   geom_histogram(binwidth = 1)+
@@ -85,7 +82,7 @@ test_data_exp1 %>% ggplot(aes(x=error))+
 
 chain_data_exp1 = test_data_exp1 %>% 
   filter(type == "fixed")%>%
-  group_by(curID, id )%>%
+  group_by(subject, id )%>%
   arrange(currentBlock,currentTrial, iteration)%>%
   mutate(rejected = curError>22.5) %>%
   filter(!rejected) %>%
@@ -94,8 +91,8 @@ chain_data_exp1 = test_data_exp1 %>%
 
 
 chain_data_exp1%>%
-  select(currentBlock, currentTrial, curID, id, iteration)%>%
-  group_by(iteration, curID,id) %>% summarise(N=n()) %>% filter(N>1)
+  select(currentBlock, currentTrial, subject, id, iteration)%>%
+  group_by(iteration, subject,id) %>% summarise(N=n()) %>% filter(N>1)
 
 chain_data_exp1 %>%
   ggplot(aes(x=error))+

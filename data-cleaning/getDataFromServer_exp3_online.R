@@ -52,17 +52,19 @@ for(d in 1:length(raw_data)){
   #}
 }
 
-all_data_exp3 = data.frame(data)
+all_data_exp3 = data.frame(data) %>% distinct()
 all_demographics_data_exp3 = data.frame(demographics_data )
 
 
 test_data_exp3 = all_data_exp3 %>%
-  filter(!isPractice)%>%
-  mutate(error = errorSign*curError)
+  filter(!isPractice)
 
 test_data_exp3$anchor= lapply(test_data_exp3$items, function(x){return(x[2])}) %>% unlist()
 test_data_exp3$items = lapply(test_data_exp3$items, function(x){return(x[1])}) %>% unlist()
 test_data_exp3$order = test_data_exp3$order %>% paste() %>% gsub("c","", .) %>% gsub("3:0","(3, 2, 1, 0)",.)%>% gsub("0:3","(0, 1, 2, 3)",.)
+
+test_data_exp3$error = mapply(circDist, test_data_exp3$imgNum, test_data_exp3$items)
+
 
 chain_data_exp3 = test_data_exp3 %>% 
   filter(type == "fixed")%>%

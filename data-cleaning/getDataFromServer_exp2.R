@@ -47,7 +47,6 @@ for(d in 1:length(raw_data)){
       demographics_data = rbind(demographics_data, demographics)
     }
   }
-
 }
 
 all_data_exp2 = data.frame(data) %>% distinct()
@@ -57,14 +56,14 @@ all_demographics_data_exp2 = data.frame(demographics_data )
 
 test_data_exp2 = all_data_exp2 %>%
   filter(!isPractice)%>%
-  mutate(error = errorSign*curError)%>%
   mutate(items = unlist(items))
+
+test_data_exp2$error = mapply(circDist, test_data_exp2$imgNum, test_data_exp2$items)
+
 
 test_data_exp2$colorVal = sapply(as.integer(test_data_exp2$imgNum),convert360ToColorVal)
 
 chain_data_exp2 = test_data_exp2 %>% 
-  mutate(stim_direction = mapply(circDist,items,lag(items)))%>%
-  mutate(serialSign = stim_direction>0)%>%
   filter(type == "fixed")%>%
   filter(abs(error)<22.5) %>%
   group_by(subject, id )%>%
