@@ -1,71 +1,15 @@
 subject,english,firstLanguage,otherLanguage,gender,age
-1,No,Spanish,,female,24
-4,Yes,,,female,21
-5,Yes,,vietnamese,female,21
-6,Yes,,,female,22
-7,Yes,,French and almost fluent around age 18,female,21
-8,No,Chinese,no,female,21
-10,No,Cantonese,,female,21
-11,Yes,,,male,21
-13,No,Spanish,,female,21
-14,Yes,,,male,22
-15,Yes,,Spanish ,female,21
-16,Yes,,,female,21
-17,No,Tagalog,"Tagalog - since birth
-English - age 7",female,22
-19,Yes,,,female,20
-21,Yes,,Spanish - 3?,female,20
-22,No,Chinese,"Chinese: from 2
-English: from 16",female,20
-23,Yes,,Japanese,female,21
-24,Yes,,,female,21
-26,No,Spanish,"Spanish (Native language)
-English (3rd grade)",female,20
-28,No,Cantonese/Mandarin,Korean and became fluent at 20,female,20
-29,No,arabic,english and arabic since I was born,female,20
-30,No,Spanish,"Spanish- first
-English- 4 years",female,20
-32,Yes,,"Arabic, learning since Birth",female,20
-33,Yes,,Vietnamese (5 years),female,20
-34,No,Chinese,"Chinese,1
-English,8",female,20
-35,No,Mandarin,japanese,female,20
-36,Yes,,Cantonese fluent at age 4,male,20
-39,No,Chinese,,female,19
-40,No,,Farsi,female,23
-41,Yes,,Spanish,female,19
-42,Yes,,,female,21
-43,Yes,,Spanish- Kindergarten,female,19
-44,No,FArsi,"Pashto age 5
-Hindi. age 7 ",female,28
-45,Yes,,Spanish,female,23
-46,Yes,,French at age 1,female,20
-48,No,Vietnamese,"English (5)
-Vietnamese (5)",female,20
-49,Yes,,,female,21
-50,Yes,,,notSay,20
-52,No,Portuguese,,female,26
-53,Yes,,,female,20
-56,No,Cantonese,"Mandarin (10)
-English (13)",male,19
-57,Yes,,"Spanish - 14
-Vietnamese - 3",female,20
-59,Yes,,,female,19
-60,Yes,,N/A,male,19
-61,No,Spanish,"Spanish 4
-English 6",female,22
-62,Yes,,no,female,27
-63,Yes,,,female,18
-65,Yes,,"Mandarin Chinese (Fluent from young age, around 3-5)",male,20
-66,No,Chinese,Chinese and English,female,19
-67,No,Vietnamese,English (12 years old0,female,20
-68,Yes,,Bengali (10),male,21
-69,Yes,,,female,21
-70,Yes,,,female,28
-71,Yes,,,female,18
-72,Yes,,,female,18
-73,No,Chinese,Chinese and English,female,19
-75,No,Chinese,,female,20
-76,No,Spanish ,,female,20
-77,Yes,,,female,20
-78,Yes,,N/A,male,18
+1,No,Urdu,"English 5
+Urdu 4
+",male,24
+2,No,spanish,"spanish 3
+English 5",male,20
+3,Yes,,Spanish 2/3 y/o,female,22
+4,No,Vietnamese,Vietnamese starting at age 5.,female,18
+5,Yes,,lebanese as i was growing up,male,19
+6,No,Portuguese,No.,male,19
+7,Yes,,Vietnamese,male,18
+8,No,Mandarin,"Mandarin, 5
+English, 16",female,18
+9,Yes,,,male,22
+10,No,Korean,"Korean, 3 years old ",female,19
